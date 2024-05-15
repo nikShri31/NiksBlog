@@ -11,11 +11,9 @@ import { Home, AddPost, AllPost, EditPost, Post, SignupPage } from './Pages/inde
 
 
 //const router = crerateBrowserRouter([]) 
-// **1st -- Browser Router bnaya 
-// ****** Main cheez authentication h--- see in authLayout
-const router = createBrowserRouter([
 
-  {
+const router = createBrowserRouter([
+ {
     path: "/",
     element: <App />,
     children: [

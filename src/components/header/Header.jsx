@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 function Header() {
 
-  const authStatus = useSelector((state) => state.auth.status );
+  const authStatus = useSelector((state) => state.auth.status);
   const navigate = useNavigate();     //Returns an imperative method for changing the location.
   // Used by s, but may also be used by other elements to change the location.
 
@@ -47,15 +47,16 @@ function Header() {
           </div>
 
           <ul className='flex ml-auto'>
-            {        
+            {
               navItems
                 .map((item) =>
                   item.active ?
                     (
                       <li key={item.name}>
                         <button
-                          onClick={() =>  navigate(item.slug) }  // navigate m hmko bs link pass krna h so we passed all slug links
-                          className='inline-bock px-6 py-2 duration-200 hover:bg-blue-100 rounded-full'>
+                          onClick={() => navigate(item.slug)}  // navigate m we passed all slug links
+                          className='inline-bock px-6 py-2 duration-200 hover:bg-blue-100 rounded-full'
+                        >
                           {item.name}
                         </button>
                       </li>

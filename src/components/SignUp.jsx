@@ -1,26 +1,28 @@
 import React, { useState } from 'react';
-import authService from '../appwrite/auth';
+import authService from '../appwrite/auth.js';
 import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../store/authSlice';
 import { Button, Input, Logo } from './index';
 import { useDispatch } from 'react-redux';
-import { useForm } from 'react-hook-form';
+import {  useForm } from 'react-hook-form';
 
- function Signup() {
+function Signup() {
 
     const navigate = useNavigate();
     const [error, setError] = useState("");
     const dispatch = useDispatch();
     const { register, handleSubmit } = useForm();
 
-    const create = async(data) => {
+    const create = async (data) => {
         setError("");                // just don't forget it 
         try {
             const userData = await authService.createAccount(data)
+            
             if (userData) {
-                const userData = await authService.getCurrentUser();
-                if (userData) dispatch(login(userData));
-                navigate('/')
+                const currentUserData = await authService.getCurrentUser()
+                if (currentUserData) dispatch(login(currentUserData));
+                console.log(currentUserData);
+                navigate("/")
             }
         } catch (error) {
             setError(error.messgae);
@@ -49,15 +51,16 @@ import { useForm } from 'react-hook-form';
 
                 <form onSubmit={handleSubmit(create)}>
                     <div className='space-y-5'>
-                        <Input 
-                            lable="Full Name: "
+
+                        <Input
+                            lable="Full Name:"
                             placeholder='enter ur full name'
                             {...register("name", {
                                 required: true
                             })}
                         />
                         <Input
-                            label="Email: "
+                            label="Email:"
                             placeholder="Enter your email"
                             type="email"
                             {...register("email", {
@@ -69,13 +72,14 @@ import { useForm } from 'react-hook-form';
                             })}
                         />
                         <Input
-                            label="Password: "
+                            label="Password:"
                             type="password"
                             placeholder="Enter your password"
                             {...register("password", {
                                 required: true,
                             })}
                         />
+
 
                         <Button type='submit' className='w-full'> Create Account </Button>
                     </div>

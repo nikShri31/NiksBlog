@@ -5,7 +5,7 @@
 import conf from "../conf/conf";
 import { Client, Databases, ID, Storage, Query } from "appwrite";
 
-export class Service {
+export class Service{
 
     client = new Client();
     databases;
@@ -21,35 +21,33 @@ export class Service {
     }
     // +++++++++++++++++++++++++  ** POST SERVICES **   +++++++++++++++++++++++++++++++++++++++++++++++++
 
-    async createPost({ title, slug, content, featuredImage, status, userId }) {
+    async createPost({title, slug, content, featuredImage, status, userId}){
         try {
             return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
-                slug,   // post.$id
+                slug,
                 {
                     title,
                     content,
                     featuredImage,
                     status,
-                    userId
+                    userId,
                 }
-            )                      //Create a new Document. Before using this route,
-            //either a server integration API or directly from your database console.
-            //you should create a new collection resource using 
-
+            )
         } catch (error) {
-            console.log("Appwrite Service :: createPost:: error", error);
+            console.log("Appwrite serive :: createPost :: error", error);
         }
     }
+         
+    // **** Update Document :  Update a document by its unique ID.(slug) ***** 
+
     async updatePost(slug, { title, content, featuredImage, status }) {
         try {
             return await this.databases.updateDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
-                slug,     //
-                // Update Document :  Update a document by its unique ID.(slug) 
-                //Using the patch method you can pass only specific fields that will get updated.
+                slug,     
                 {
                     title,
                     content,
@@ -115,19 +113,19 @@ export class Service {
     //after you create a {bucket} or have navigated to bucket details, you can access the Files tab 
     // so you can upload,view, delete and update files in the bucket using the Appwrite project's dashboard. 
 
-    async uploadFile(file) {
+    async uploadFile(file){
         try {
             return await this.bucket.createFile(
                 conf.appwriteBucketId,
                 ID.unique(),
                 file
             )
-        }
-        catch (error) {
-            console.log("Appwrite Service:: uploadFile:: error", error);
+        } catch (error) {
+            console.log("Appwrite service :: uploadFile :: error", error);
             return false;
         }
     }
+
     async deleteFile(fileId) {           // Delete a file by its unique ID.
                                         //  Only users with write permissions have access to delete this resource.
         try {

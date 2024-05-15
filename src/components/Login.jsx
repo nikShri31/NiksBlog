@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import {  useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import authService from '../appwrite/auth';
 import { Button, Input, Logo } from './index';
-import { login as authLogin } from '../store/authSlice' ;// action-1
+import { login as authLogin } from '../store/authSlice';// action-1
 
 
 
 function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { register, handleSubmit } = useForm();  
-     console.log(register);
+    const { register, handleSubmit } = useForm();
+    console.log(register);
     const [error, setError] = useState("");
 
     // const login = async()=>{}  ---> isko handle submit m enter krenge
@@ -24,7 +24,8 @@ function Login() {
         try {
             const session = await authService.login(data)
             if (session) {
-                const userData = await authService.getCurrentUser();
+                const userData = await authService.getCurrentUser()
+                console.log(userData);
                 if (userData) dispatch(authLogin(userData));
                 navigate("/")
             }        // last m user ko directly navigate kr denge home route pr 
@@ -38,7 +39,7 @@ function Login() {
     return (
         /* 1st : ADD LOGO */
         <div className='flex items-center justify-center w-full'>
-        
+
             <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
                 <div className="mb-2 flex justify-center">
                     <span className="inline-block w-full max-w-[100px]">
@@ -60,8 +61,8 @@ function Login() {
                 {/* important to use from in react hook form   */}
                 <form onSubmit={handleSubmit(login)} className='mt-8'>
                     <div className='space-y-5'>
-                        <Input 
-                            lable="Email:"      
+                        <Input
+                            lable="Email:"
                             placeholder='Enter your email'
                             type="email"
                             {...register("email", {
@@ -73,12 +74,13 @@ function Login() {
                                 }
                             })}
                         />
-                        <Input lable='Password:'
+                        <Input
+                            lable='Password:'
                             placeholder='Enter Password'
                             type="password"
                             {...register("password", { required: true })}
                         />
-                        <Button type='submit' className='w-full' >   
+                        <Button type='submit' className='w-full' >
                             Sign In
                         </Button>
                     </div>

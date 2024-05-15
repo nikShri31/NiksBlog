@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// ......Store k andr bhi hum slice bna skte h toh hum authentication slice bnayenge......
+
 // ***** User authenticated h ya nhi 
 
 const initialState = {
